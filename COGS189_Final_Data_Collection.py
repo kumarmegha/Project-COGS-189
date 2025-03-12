@@ -1,6 +1,7 @@
 import time
+# import jaraco
 
-
+# import packaging
 import numpy as np
 import pandas as pd
 from brainflow.board_shim import BoardShim, BrainFlowInputParams, LogLevels, BoardIds
@@ -30,10 +31,8 @@ def on_press(key, board):
 def main():
     BoardShim.enable_dev_board_logger()
 
-
-    # use synthetic board for demo
     params = BrainFlowInputParams()
-    params.serial_port = "COM8"
+    params.serial_port = "COM9"
     board = BoardShim(BoardIds.CYTON_BOARD, params)
     board.prepare_session()
     board.start_stream()
@@ -57,13 +56,11 @@ def main():
 
 
     # demo for data serialization using brainflow API, we recommend to use it instead pandas.to_csv()
-    DataFilter.write_file(data, 'test.csv', 'w')  # use 'a' for append mode
-    restored_data = DataFilter.read_file('test.csv')
+    DataFilter.write_file(data, 'sudoku4.csv', 'w')  # use 'a' for append mode
+    restored_data = DataFilter.read_file('sudoku4.csv')
     restored_df = pd.DataFrame(np.transpose(restored_data))
     print('Data From the File')
     print(restored_df.head(10))
-
-
 
 
 if __name__ == "__main__":
